@@ -1,7 +1,54 @@
-import React from "react";
+import React, { useState } from "react";
+import { NavLink } from "react-router-dom";
+import { ExitIcon } from "@radix-ui/react-icons";
+import { useEffect } from "react";
 
 function NavBar() {
-  return <div>NavBar</div>;
+  const [isLogin, setIsLogin] = useState(false);
+
+  useEffect(() => {
+    const loginStatus = localStorage.getItem("user") ? true : false;
+    setIsLogin(loginStatus);
+  }, []);
+  return (
+    <nav className="flex gap-6 container mx-auto ">
+      <NavLink
+        to="/"
+        className={` dark:text-gray-300 font-mono hover:text-indigo-500 `}
+      >
+        Articles
+      </NavLink>
+      {isLogin ? (
+        <div className="flex items-center justify-between max-w-[80%] w-full sm:w-30% md:w-full sm:gap-20 gap-5 ">
+          <NavLink
+            to="/articles/create"
+            className={` dark:text-gray-300 font-mono hover:text-indigo-500`}
+          >
+            <span className="hidden sm:block">Create Article</span>
+          </NavLink>
+          <NavLink
+            to="/login"
+            onClick={() => {
+              localStorage.setItem("user");
+            }}
+            className={`flex items-center gap-2 dark:text-gray-300 font-mono hover:text-indigo-500 
+              `}
+          >
+            <ExitIcon />
+            <span className="hidden sm:block">Quit</span>
+          </NavLink>
+        </div>
+      ) : (
+        <NavLink
+          to="/login"
+          className={` dark:text-gray-300 font-mono hover:text-indigo-500 
+              `}
+        >
+          Login
+        </NavLink>
+      )}
+    </nav>
+  );
 }
 
 export default NavBar;
