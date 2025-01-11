@@ -5,7 +5,6 @@ import { useEffect } from "react";
 
 function NavBar() {
   const [isLogin, setIsLogin] = useState(false);
-
   useEffect(() => {
     const loginStatus = localStorage.getItem("user") ? true : false;
     setIsLogin(loginStatus);
@@ -27,9 +26,13 @@ function NavBar() {
             <span className="hidden sm:block">Create Article</span>
           </NavLink>
           <NavLink
-            to="/login"
+            to="/"
             onClick={() => {
-              localStorage.removeItem("user");
+              if (
+                confirm("Rostdan ham profilingizdan chiqib ketmoqchimisiz?")
+              ) {
+                localStorage.removeItem("user");
+              }
             }}
             className={`flex items-center gap-2 dark:text-gray-300 font-mono hover:text-indigo-500 
               `}
