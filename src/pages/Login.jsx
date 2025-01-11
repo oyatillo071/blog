@@ -61,7 +61,7 @@ function Login() {
     <div className="flex items-center justify-center h-screen ">
       <div className="p-8 rounded-lg shadow-2xl  max-w-sm w-full bg-white dark:bg-gray-800">
         <h2 className="text-2xl font-bold text-center mb-6">Login</h2>
-        <Toaster />
+        <Toaster position="bottom-center" />
         <button
           onClick={toggleDarkMode}
           className="absolute top-4 right-4 p-2 bg-indigo-500 text-white rounded-full"

@@ -50,7 +50,7 @@ function RegisterPage() {
       </button>
       <div className="p-8 rounded-lg shadow-lg max-w-sm w-full bg-white dark:bg-gray-800">
         <h2 className="text-2xl font-bold text-center mb-6">Register</h2>
-        <Toaster />
+        <Toaster position="bottom-center" />
 
         <form onSubmit={handleSubmit}>
           <div className="mb-4">

@@ -4,6 +4,7 @@ import { Pencil1Icon } from "@radix-ui/react-icons";
 import { Button } from "@/components/ui/button";
 import axios from "axios";
 import { SaveIcon } from "lucide-react";
+import { Rings } from "react-loader-spinner";
 
 const EditArticleModal = ({ article, closeModal }) => {
   const [formData, setFormData] = useState({
@@ -77,7 +78,7 @@ const EditArticleModal = ({ article, closeModal }) => {
           <div className="mb-4">
             <label
               htmlFor="title"
-              className="block text-sm font-medium text-gray-700 dark:text-gray-300"
+              className="block text-base sm:text-sm font-medium text-gray-700 dark:text-gray-300"
             >
               Title
             </label>
@@ -133,7 +134,18 @@ const EditArticleModal = ({ article, closeModal }) => {
               disabled={loading}
             >
               <SaveIcon />
-              {loading ? "Saving..." : "Save"}
+              {loading ? (
+                <Rings
+                  height="80"
+                  width="80"
+                  color="#4fa94d"
+                  radius="6"
+                  wrapperStyle={{}}
+                  visible={true}
+                />
+              ) : (
+                "Save"
+              )}
             </Button>
           </div>
         </form>

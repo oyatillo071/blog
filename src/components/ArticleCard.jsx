@@ -2,12 +2,14 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import { toast, Toaster } from "sonner";
+import { Button } from "@radix-ui/themes/dist/cjs/index.js";
+import { EyeIcon, EyeOffIcon } from "lucide-react";
 
 function ArticleCard({ article }) {
-  console.log(article);
-
+  //   console.log(article);
   const [comment, setComment] = useState("");
   const [comments, setComments] = useState(article.comments || []);
+  const [isCommentsHide, setIsCommentsHide] = useState(true);
 
   const navigate = useNavigate();
 
@@ -58,7 +60,7 @@ function ArticleCard({ article }) {
 
   return (
     <div className="p-4 bg-white border flex justify-between relative flex-col rounded-lg shadow-md hover:shadow-lg transition-shadow dark:bg-gray-800">
-      <Toaster />{" "}
+      <Toaster position="bottom-center" />{" "}
       <div>
         <h2 className="text-blue-400 sm:text-xl text-base">
           @{article.username || "admin"}
@@ -85,25 +87,63 @@ function ArticleCard({ article }) {
           <span className="hidden sm:block">Published:</span> {formattedDate}
         </p>
       </div>
-      <div className="mt-6">
-        <h3 className="sm:text-lg text-sm font-semibold">Comments</h3>
-        {comments.length === 0 ? (
-          <p>No comments yet.</p>
+      <div className="mt-6 ">
+        <Button
+          className={`absolute sm:hidden right-3 bottom-44 w-[90%]  mx-auto  flex items-center justify-${
+            !isCommentsHide ? "end" : "between"
+          } gap-6`}
+          onClick={() => {
+            setIsCommentsHide((prev) => !prev);
+          }}
+        >
+          {isCommentsHide ? comments.length + " - comments " : ""}
+
+          {!isCommentsHide ? <EyeOffIcon /> : <EyeIcon />}
+        </Button>
+        {isCommentsHide ? (
+          ""
         ) : (
-          <ul className="space-y-3">
-            {comments.map((comment, index) => (
-              <li key={index} className="border-b py-2">
-                <p className="sm:text-sm text-xs font-semibold">
-                  {comment.username}
-                </p>
-                <p className="sm:text-sm text-xs text-gray-500">
-                  {new Date(comment.time).toLocaleString()}
-                </p>
-                <p className="text-sm mt-1">{comment.text}</p>
-              </li>
-            ))}
-          </ul>
+          <div className=" sm:hidden">
+            <h3 className="sm:text-lg text-sm font-semibold">Comments</h3>
+            {comments.length === 0 ? (
+              <p>No comments yet.</p>
+            ) : (
+              <ul className="space-y-3">
+                {comments.map((comment, index) => (
+                  <li key={index} className="border-b py-2">
+                    <p className="sm:text-sm text-xs font-semibold">
+                      {comment.username}
+                    </p>
+                    <p className="sm:text-sm text-xs text-gray-500">
+                      {new Date(comment.time).toLocaleString()}
+                    </p>
+                    <p className="text-sm mt-1">{comment.text}</p>
+                  </li>
+                ))}
+              </ul>
+            )}
+          </div>
         )}
+        <div className="hidden sm:block">
+          <h3 className="sm:text-lg text-sm font-semibold">Comments</h3>
+          {comments.length === 0 ? (
+            <p>No comments yet.</p>
+          ) : (
+            <ul className="space-y-3">
+              {comments.map((comment, index) => (
+                <li key={index} className="border-b py-2">
+                  <p className="sm:text-sm text-xs font-semibold">
+                    {comment.username}
+                  </p>
+                  <p className="sm:text-sm text-xs text-gray-500">
+                    {new Date(comment.time).toLocaleString()}
+                  </p>
+                  <p className="text-sm mt-1">{comment.text}</p>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
         <form onSubmit={handleCommentSubmit} className="mt-4">
           <textarea

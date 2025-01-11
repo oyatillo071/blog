@@ -5,7 +5,7 @@ import { useNavigate } from "react-router-dom";
 import { setLoading, setArticles, setPage } from "../store/articleSlice";
 import { Button } from "@radix-ui/themes/dist/cjs/index.js";
 import ArticleCard from "../components/ArticleCard";
-
+import { Rings } from "react-loader-spinner";
 function ArticleList() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
@@ -55,11 +55,14 @@ function ArticleList() {
 
   const handleDelete = async (id) => {
     try {
-      await axios.delete(`https://json-api.uz/api/project/blog-api/articles`, {
-        headers: {
-          Authorization: `Bearer ${userData.access_token}`,
-        },
-      });
+      await axios.delete(
+        `https://json-api.uz/api/project/blog-api/articles/${id}`,
+        {
+          headers: {
+            Authorization: `Bearer ${userData.access_token}`,
+          },
+        }
+      );
       fetchArticles(currentPage);
     } catch (error) {
       console.log("Error deleting article:", error);
@@ -80,7 +83,17 @@ function ArticleList() {
     <div className="container mx-auto px-4 py-6">
       <h1 className="text-3xl font-bold mb-6 text-start">Articles</h1>
       {isLoading ? (
-        <p className="text-center">Loading articles...</p>
+        <div className="fixed top-[40%] left-[40%]">
+          {/* <p className="text-center">Loading articles...</p> */}
+          <Rings
+            height="180"
+            width="180"
+            color="#4fa94d"
+            radius="6"
+            wrapperStyle={{}}
+            visible={true}
+          />
+        </div>
       ) : (
         <>
           <div className="flex flex-col space-y-4">
@@ -92,7 +105,6 @@ function ArticleList() {
               />
             ))}
           </div>
-          {/* Pagination */}
           <div className="flex justify-center items-center mt-6 space-x-4">
             <Button
               onClick={() => handlePageChange(currentPage - 1)}
