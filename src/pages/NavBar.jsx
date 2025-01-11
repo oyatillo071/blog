@@ -1,10 +1,11 @@
 import React, { useState } from "react";
-import { NavLink } from "react-router-dom";
+import { NavLink, useNavigate } from "react-router-dom";
 import { ExitIcon } from "@radix-ui/react-icons";
 import { useEffect } from "react";
 
 function NavBar() {
   const [isLogin, setIsLogin] = useState(false);
+  const navigate = useNavigate();
   useEffect(() => {
     const loginStatus = localStorage.getItem("user") ? true : false;
     setIsLogin(loginStatus);
@@ -25,13 +26,14 @@ function NavBar() {
           >
             <span className="hidden sm:block">Create Article</span>
           </NavLink>
-          <NavLink
-            to="/"
+          <button
             onClick={() => {
               if (
                 confirm("Rostdan ham profilingizdan chiqib ketmoqchimisiz?")
               ) {
                 localStorage.removeItem("user");
+                setIsLogin(false);
+                navigate("/login");
               }
             }}
             className={`flex items-center gap-2 dark:text-gray-300 font-mono hover:text-indigo-500 
@@ -39,7 +41,7 @@ function NavBar() {
           >
             <ExitIcon />
             <span className="hidden sm:block">Quit</span>
-          </NavLink>
+          </button>
         </div>
       ) : (
         <NavLink

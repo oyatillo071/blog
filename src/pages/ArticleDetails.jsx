@@ -97,6 +97,7 @@ function ArticleDetails() {
         setComment("");
       }
     } catch (error) {
+      toast.info("Error check browser console");
       console.log("Error adding comment:", error);
     }
   };
