@@ -20,7 +20,12 @@ function ArticleDetails() {
 
   const userData = JSON.parse(localStorage.getItem("user"));
   const canEditOrDelete =
-    userData?.type === "admin" || userData?.username === article?.username;
+    userData != null
+      ? userData?.type === "admin" || userData?.username === article?.username
+      : false;
+
+  console.log("24qator", canEditOrDelete);
+  console.log("25qator userDAta", userData);
 
   const handleEdit = () => {
     setIsModalOpen(true);

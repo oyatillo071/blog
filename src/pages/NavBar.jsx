@@ -29,7 +29,7 @@ function NavBar() {
           <NavLink
             to="/login"
             onClick={() => {
-              localStorage.setItem("user");
+              localStorage.removeItem("user");
             }}
             className={`flex items-center gap-2 dark:text-gray-300 font-mono hover:text-indigo-500 
               `}
